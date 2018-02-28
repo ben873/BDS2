@@ -1,6 +1,7 @@
 (function (root) {
 var BensNavBar = root.BensNavBar = {};
 BensNavBar.touch = false;
+BensNavBar.menuOpen = false;
 BensNavBar.mailingListLink = 'https://btn.ymlp.com/xgesummygmgm';
 
 BensNavBar.addClass = function (element, newClass) {
@@ -47,13 +48,16 @@ BensNavBar.showMenu = function () {
   var menuButton = document.getElementById('menubutton');
   BensNavBar.addClass(menuButton, 'touch');
   BensNavBar.addClass(document.getElementById('drophover'), 'show');
+  BensNavBar.menuOpen = true;
 };
 
 BensNavBar.hideMenu = function (hoverElement) {
   BensNavBar.removeClass(document.getElementById('menubutton'), 'touch');
+  BensNavBar.menuOpen = false;
   if (typeof hoverElement !== 'undefined') {
     BensNavBar.removeClass(hoverElement, 'touch');
     window.location = hoverElement.href;
+    
   }
 
   BensNavBar.removeClass(document.getElementById('drophover'), 'show');
@@ -74,11 +78,14 @@ BensNavBar.handleTouchStart = function (evt) {
 };
 
 BensNavBar.handleTouchMove = function handleTouchMove(evt) {
-  console.log('touchmove fired');
-  evt.stopPropagation();
-  evt.preventDefault();
-  var hoverElement = document.elementFromPoint(evt.clientX || evt.touches[0].clientX, evt.clientY || evt.touches[0].clientY);
-  BensNavBar.hoverOn(hoverElement);
+ if (!BensNavBar.menuOpen) {
+   return;
+ }
+ console.log('touchmove fired');
+ evt.stopPropagation();
+ evt.preventDefault();
+ var hoverElement = document.elementFromPoint(evt.clientX || evt.touches[0].clientX, evt.clientY || evt.touches[0].clientY);
+ BensNavBar.hoverOn(hoverElement);
 };
 
 BensNavBar.handleTouchEnd = function (evt) {
@@ -86,9 +93,9 @@ BensNavBar.handleTouchEnd = function (evt) {
   BensNavBar.hideMenu(BensNavBar.currentHoverElement);
 };
 
-document.addEventListener('touchstart', BensNavBar.handleTouchStart, {passive: true});
-document.addEventListener('touchmove', BensNavBar.handleTouchMove, {passive: true});
-document.addEventListener('touchend', BensNavBar.handleTouchEnd, {passive: true});
+document.addEventListener('touchstart', BensNavBar.handleTouchStart, {passive: false});
+document.addEventListener('touchmove', BensNavBar.handleTouchMove, {passive: false});  
+document.addEventListener('touchend', BensNavBar.handleTouchEnd, {passive: false});
 document.addEventListener('mousedown', BensNavBar.handleTouchStart, false);
 document.addEventListener('mousemove', BensNavBar.handleTouchMove, false);
 document.addEventListener('mouseup', BensNavBar.handleTouchEnd, false);
