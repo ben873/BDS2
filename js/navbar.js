@@ -86,9 +86,9 @@ BensNavBar.handleTouchEnd = function (evt) {
   BensNavBar.hideMenu(BensNavBar.currentHoverElement);
 };
 
-document.addEventListener('touchstart', BensNavBar.handleTouchStart, false);
-document.addEventListener('touchmove', BensNavBar.handleTouchMove, false);
-document.addEventListener('touchend', BensNavBar.handleTouchEnd, false);
+document.addEventListener('touchstart', BensNavBar.handleTouchStart, {passive: true});
+document.addEventListener('touchmove', BensNavBar.handleTouchMove, {passive: true});
+document.addEventListener('touchend', BensNavBar.handleTouchEnd, {passive: true});
 document.addEventListener('mousedown', BensNavBar.handleTouchStart, false);
 document.addEventListener('mousemove', BensNavBar.handleTouchMove, false);
 document.addEventListener('mouseup', BensNavBar.handleTouchEnd, false);
