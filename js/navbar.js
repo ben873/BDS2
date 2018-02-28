@@ -58,6 +58,7 @@ BensNavBar.hideMenu = function (hoverElement) {
  if (typeof hoverElement !== 'undefined') {
    BensNavBar.removeClass(hoverElement, 'touch');
    window.location = hoverElement.href;
+   BensNavBar.currentHoverElement = undefined;
  }
 
 
