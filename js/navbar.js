@@ -51,20 +51,23 @@ BensNavBar.showMenu = function () {
   BensNavBar.menuOpen = true;
 };
 
-BensNavBar.hideMenu = function (hoverElement) {
 
+
+BensNavBar.hideMenu = function (hoverElement) {
  BensNavBar.removeClass(document.getElementById('menubutton'), 'touch');
  BensNavBar.menuOpen = false;
  if (typeof hoverElement !== 'undefined') {
    BensNavBar.removeClass(hoverElement, 'touch');
-   window.location = hoverElement.href;
-   BensNavBar.currentHoverElement = undefined;
+   window.location = hoverElement.href; 
  }
-
-
- 
+ if (typeof BensNavBar.currentHoverElement !== 'undefined') {
+   BensNavBar.removeClass(BensNavBar.currentHoverElement, 'hoveron');
+ }
+  BensNavBar.currentHoverElement = undefined;
   BensNavBar.removeClass(document.getElementById('drophover'), 'show');
 };
+
+
 
 BensNavBar.handleTouchStart = function (evt) {
   var menuButton = document.getElementById('menubutton');
