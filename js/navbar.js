@@ -48,16 +48,20 @@ BensNavBar.showMenu = function () {
   BensNavBar.menuOpen = true;
   BensNavBar.addClass(menuButton, 'touch');
   BensNavBar.addClass(document.getElementById('drophover'), 'show');
+  BensNavBar.menuOpen = true;
 };
 
 BensNavBar.hideMenu = function (hoverElement) {
+
  BensNavBar.removeClass(document.getElementById('menubutton'), 'touch');
  BensNavBar.menuOpen = false;
  if (typeof hoverElement !== 'undefined') {
    BensNavBar.removeClass(hoverElement, 'touch');
    window.location = hoverElement.href;
-
  }
+
+
+ 
   BensNavBar.removeClass(document.getElementById('drophover'), 'show');
 };
 
@@ -78,6 +82,7 @@ BensNavBar.handleTouchStart = function (evt) {
 };
 
 BensNavBar.handleTouchMove = function handleTouchMove(evt) {
+
   if (!BensNavBar.menuOpen) {
     return;
   }
@@ -86,6 +91,8 @@ BensNavBar.handleTouchMove = function handleTouchMove(evt) {
   evt.preventDefault();
   var hoverElement = document.elementFromPoint(evt.clientX || evt.touches[0].clientX, evt.clientY || evt.touches[0].clientY);
   BensNavBar.hoverOn(hoverElement);
+
+
 };
 
 BensNavBar.handleTouchEnd = function (evt) {
