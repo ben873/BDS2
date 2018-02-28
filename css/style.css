@@ -45,6 +45,7 @@ a{
 	body {
 		font-size: 6px;
 		line-height: 1;
+		
 	}
 	#navbar{
 		display: none;
@@ -133,10 +134,7 @@ a{
 	#container{
 		max-width: 720px;
 	}
-	body {
-		font-size: 16px;
-		line-height: 1.2;
-	}
+	
 	
 
 	
