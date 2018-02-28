@@ -5,6 +5,7 @@ body{
 	font-weight: normal;
 	line-height: 1.3;
 	font-family: serif;
+	
 }
 
 
@@ -148,7 +149,9 @@ a{
 
 
 /* ID */
-
+#mainpic {
+	pointer-events: none;
+}
 
 #header a{
 	color: #000;
@@ -404,12 +407,10 @@ a{
 	overflow: hidden;
 	padding-top: 5%;
 	margin-right: 5%;
-	
 	padding-bottom: 4%;
 	vertical-align: top;	
 	
 }
-
 
 
 
@@ -446,6 +447,9 @@ a{
   background-color: #9e9e9e;
 }
 */
+
+
+
 .dropdown {
     position: absolute;
 	top: 5%;
@@ -512,3 +516,4 @@ a{
 .dropbtn.touch{
   
 }
+
