@@ -1,6 +1,7 @@
 (function (root) {
 var BensNavBar = root.BensNavBar = {};
 BensNavBar.touch = false;
+BensNavBar.menuOpen = false;
 BensNavBar.mailingListLink = 'https://btn.ymlp.com/xgesummygmgm';
 
 BensNavBar.addClass = function (element, newClass) {
@@ -33,8 +34,7 @@ BensNavBar.hoverOn = function (element) {
       BensNavBar.removeClass(BensNavBar.currentHoverElement, 'hoveron');
     }
 
-    if (typeof element !== 'undefined' &&
-        ['link1', 'link2', 'link3', 'link4', 'link5'].includes(element.id)) {
+    if (element && ['link1', 'link2', 'link3', 'link4', 'link5'].includes(element.id)) {
       BensNavBar.addClass(element, 'hoveron');
       BensNavBar.currentHoverElement = element;
     } else {
@@ -45,35 +45,42 @@ BensNavBar.hoverOn = function (element) {
 
 BensNavBar.showMenu = function () {
   var menuButton = document.getElementById('menubutton');
+  BensNavBar.menuOpen = true;
   BensNavBar.addClass(menuButton, 'touch');
   BensNavBar.addClass(document.getElementById('drophover'), 'show');
 };
 
 BensNavBar.hideMenu = function (hoverElement) {
-  BensNavBar.removeClass(document.getElementById('menubutton'), 'touch');
-  if (typeof hoverElement !== 'undefined') {
-    BensNavBar.removeClass(hoverElement, 'touch');
-    window.location = hoverElement.href;
-  }
+ BensNavBar.removeClass(document.getElementById('menubutton'), 'touch');
+ BensNavBar.menuOpen = false;
+ if (typeof hoverElement !== 'undefined') {
+   BensNavBar.removeClass(hoverElement, 'touch');
+   window.location = hoverElement.href;
 
+ }
   BensNavBar.removeClass(document.getElementById('drophover'), 'show');
 };
 
 BensNavBar.handleTouchStart = function (evt) {
+  var menuButton = document.getElementById('menubutton');
+  if (evt.target != menuButton) {
+    return;
+  }
   evt.stopPropagation();
   evt.preventDefault();
   document.getElementsByClassName('dropdown')[0].style.cursor = 'none';
   BensNavBar.touch = true;
-  var menuButton = document.getElementById('menubutton');
+
   var hoverElement = document.elementFromPoint(evt.clientX || evt.touches[0].clientX, evt.clientY || evt.touches[0].clientY);
-  if (['menubutton', 'menuimage'].includes(hoverElement.className)) {
+  if (hoverElement.id === 'menubutton') {
     BensNavBar.showMenu();
-  } else if (['emaillist'].includes(hoverElement.className)) {
-    window.open(BensNavBar.mailingListLink, '_blank');
   }
 };
 
 BensNavBar.handleTouchMove = function handleTouchMove(evt) {
+  if (!BensNavBar.menuOpen) {
+    return;
+  }
   console.log('touchmove fired');
   evt.stopPropagation();
   evt.preventDefault();
@@ -86,9 +93,9 @@ BensNavBar.handleTouchEnd = function (evt) {
   BensNavBar.hideMenu(BensNavBar.currentHoverElement);
 };
 
-document.addEventListener('touchstart', BensNavBar.handleTouchStart, {passive: true});
-document.addEventListener('touchmove', BensNavBar.handleTouchMove, {passive: true});
-document.addEventListener('touchend', BensNavBar.handleTouchEnd, {passive: true});
+document.addEventListener('touchstart', BensNavBar.handleTouchStart, {passive: false});
+document.addEventListener('touchmove', BensNavBar.handleTouchMove, {passive: false});
+document.addEventListener('touchend', BensNavBar.handleTouchEnd, {passive: false});
 document.addEventListener('mousedown', BensNavBar.handleTouchStart, false);
 document.addEventListener('mousemove', BensNavBar.handleTouchMove, false);
 document.addEventListener('mouseup', BensNavBar.handleTouchEnd, false);
